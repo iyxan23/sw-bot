@@ -69,7 +69,7 @@ async def on_reaction_add(reaction, user):
     # Check if this is us
     if reaction.message.author == client.user and user != client.user:
         if reaction.emoji in emojis:
-            for react_ in reaction.message.reactions:
+            for react_ in reaction.message.reactions:
                 if react_.emoji == reaction.emoji:
                     continue
 
