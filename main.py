@@ -46,10 +46,18 @@ async def idea(ctx, idea_for="app", idea=None):
         await ctx.send("Hey, can you put your idea on the 2rd argument?")
         return
 
+    emojis = ['⬆️', '⬇️']
+
     embed = discord.Embed(description="**Idea:** " + idea, color=0x1891fb)
     embed.set_author(name=ctx.message.author.display_name, icon_url=ctx.message.author.avatar_url)
     embed.timestamp = datetime.datetime.utcnow()
     embed.set_footer(text="SWBot")
-    await channel.send(embed=embed)
+
+    message = await ctx.send(embed=embed)
+
+    await ctx.message.delete()
+    
+    for emoji in emojis:
+        await message.add_reaction(emoji)
 
 client.run(token)
