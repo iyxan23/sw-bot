@@ -14,21 +14,21 @@ async def on_ready():
 
 
 
-@client.command()
+@client.command(name="ping", description="What do you think this would be?")
 async def ping(ctx):
     await ctx.send(f"🏓 Pong, that took {int(client.latency * 1000)}ms")
 
-@client.command()
+@client.command(name="pong", description="This is like ping but with a surprise")
 async def pong(ctx):
     await ctx.send(f"🏓 Ping, that took {int(client.latency * 1000)}ms"[::-1])
 
-@client.command(name="whoami")
+@client.command(name="whoami", description="Who am I? Who are you!? WHERE AM I?!? WHY AM I HERE?!?1?!1?!")
 async def whoami(ctx):
     await ctx.send(f"You're {ctx.message.author.name}, dum dum")
 
 
 
-@client.command()
+@client.command(name="idea", description="Suggest an idea, Usage: +idea app/server \"Hello World\"")
 async def idea(ctx, idea_for="app", idea=None):
     channel = None
 
@@ -69,9 +69,7 @@ async def on_reaction_add(reaction, user):
     # Check if this is us
     if reaction.message.author == client.user and user != client.user:
         if reaction.emoji in emojis:
-
-            for react_ in reaction.message.reactions:
-
+            for react_ in reaction.message.reactions:
                 if react_.emoji == reaction.emoji:
                     continue
 
