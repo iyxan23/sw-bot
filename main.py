@@ -1,9 +1,10 @@
 import discord
 from discord.ext import commands
+from pretty_help import PrettyHelp # Because I'm lazy
 import os
 import datetime
 
-client = commands.Bot(command_prefix="+")
+client = commands.Bot(command_prefix="+", help_command=PrettyHelp())
 token = os.getenv("DISCORD_BOT_TOKEN")
 
 
