@@ -60,4 +60,28 @@ async def idea(ctx, idea_for="app", idea=None):
     for emoji in emojis:
         await message.add_reaction(emoji)
 
+
+
+@client.event
+async def on_reaction_add(reaction, user):
+    emojis = ['⬆️', '⬇️']
+
+    # Check if this is us
+    if reaction.message.author == client.user and user != client.user:
+        print("ok sombodi emoji")
+        if reaction.emoji in emojis:
+
+            print("mmmm this is a valid emoji")
+            for react_ in reaction.message.reactions:
+
+                print("loop")
+                if react_.emoji == reaction.emoji:
+                    continue
+
+                users = await react_.users().flatten()
+                if user in users:
+                    print("ha gotcha, ya can't do dat")
+                    await reaction.message.remove_reaction(react_.emoji, user)
+                    return
+
 client.run(token)
