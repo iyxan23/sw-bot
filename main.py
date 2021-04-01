@@ -68,19 +68,15 @@ async def on_reaction_add(reaction, user):
 
     # Check if this is us
     if reaction.message.author == client.user and user != client.user:
-        print("ok sombodi emoji")
         if reaction.emoji in emojis:
 
-            print("mmmm this is a valid emoji")
             for react_ in reaction.message.reactions:
 
-                print("loop")
                 if react_.emoji == reaction.emoji:
                     continue
 
                 users = await react_.users().flatten()
                 if user in users:
-                    print("ha gotcha, ya can't do dat")
                     await reaction.message.remove_reaction(react_.emoji, user)
                     return
 
