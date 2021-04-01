@@ -70,7 +70,7 @@ async def idea(ctx, idea_for="app", idea=None):
     embed.timestamp = datetime.datetime.utcnow()
     embed.set_footer(text="SWBot")
 
-    message = await ctx.send(embed=embed)
+    message = await channel.send(embed=embed)
 
     await ctx.message.delete()
     
