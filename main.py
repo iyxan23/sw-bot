@@ -6,10 +6,13 @@ import datetime
 client = commands.Bot(command_prefix="+")
 token = os.getenv("DISCORD_BOT_TOKEN")
 
+
 @client.event
 async def on_ready():
     await client.change_presence(status = discord.Status.idle, activity = discord.Game("me por modir"))
     print("Discord bot ready")
+
+
 
 @client.command()
 async def ping(ctx):
@@ -23,9 +26,7 @@ async def pong(ctx):
 async def whoami(ctx):
     await ctx.send(f"You're {ctx.message.author.name}, dum dum")
 
-# @client.command()
-# async def purge(ctx, amount=3) :
-#     await ctx.channel.purge(limit=amount)
+
 
 @client.command()
 async def idea(ctx, idea_for="server", idea=None):
