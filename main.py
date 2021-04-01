@@ -29,7 +29,7 @@ async def whoami(ctx):
 
 
 @client.command()
-async def idea(ctx, idea_for="server", idea=None):
+async def idea(ctx, idea_for="app", idea=None):
     channel = None
 
     if idea_for == "server":
@@ -39,11 +39,11 @@ async def idea(ctx, idea_for="server", idea=None):
         channel = client.get_channel(790687893701918730)
 
     else:
-        await ctx.send("Hey, the 2nd parameter can only be \"app\" (suggest something for the mod) or \"server\" (suggest something for the server).")
+        await ctx.send("Hey, the 1st parameter can only be \"app\" (suggest something for the mod) or \"server\" (suggest something for the server).")
         return
 
     if idea == None:
-        await ctx.send("Hey, can you put your idea on the 3rd argument?")
+        await ctx.send("Hey, can you put your idea on the 2rd argument?")
         return
 
     embed = discord.Embed(description="**Idea:** " + idea, color=0x1891fb)
