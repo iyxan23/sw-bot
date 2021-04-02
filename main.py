@@ -88,7 +88,7 @@ async def purge(ctx, amount=1):
         await ctx.channel.purge(limit=amount)
         await ctx.send(content="Purged " + str(amount) + " messages", delete_after=10)
     else:
-        await ctx.send("Where is your \"Manage Messages\" permission <:wtfwithtea:826512739949084754>", delete_after=5)
+        await ctx.send("Where is your \"Manage Messages\" permission <:wtfwithtea:826512739949084754>")
 
 
 
