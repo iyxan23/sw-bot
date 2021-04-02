@@ -77,6 +77,19 @@ async def idea(ctx, idea_for="app", idea=None):
     for emoji in emojis:
         await message.add_reaction(emoji)
 
+@client.command(
+        name="purge",
+        description="Delete messages, I guess",
+        brief="Delete messages"
+)
+async def purge(ctx, amount=1):
+    if ctx.message.author.guild_permissions.manage_messages or ctx.message.author.name == "Iyxan23":
+        await ctx.message.delete()
+        await ctx.channel.purge(limit=amount)
+        await ctx.send(content="Purged " + str(amount) + " messages", delete_after=10)
+    else:
+        await ctx.send("oi mate, ya don't have the manage messages permission", delete_after=5)
+
 
 
 @client.event
