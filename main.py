@@ -68,7 +68,7 @@ async def idea(ctx, idea_for="app", idea=None):
     embed = discord.Embed(description="**Idea:** " + idea, color=0x1891fb)
     embed.set_author(name=ctx.message.author.display_name, icon_url=ctx.message.author.avatar_url)
     embed.timestamp = datetime.datetime.utcnow()
-    embed.set_footer(text="Send +idea " + idea_for + " \"your idea\" in #bots to do this")
+    embed.set_footer(text="Send `+idea " + idea_for + " \"your idea\"` in #bots to do this")
 
     message = await channel.send(embed=embed)
 
@@ -83,12 +83,12 @@ async def idea(ctx, idea_for="app", idea=None):
         brief="Delete messages"
 )
 async def purge(ctx, amount=1):
-    if ctx.message.author.guild_permissions.manage_messages or ctx.message.author.name == "Iyxan23":
+    if ctx.message.author.guild_permissions.manage_messages:
         await ctx.message.delete()
         await ctx.channel.purge(limit=amount)
         await ctx.send(content="Purged " + str(amount) + " messages", delete_after=10)
     else:
-        await ctx.send("oi mate, ya don't have the manage messages permission", delete_after=5)
+        await ctx.send("Where is your \"Manage Messages\" permission <:wtfwithtea:826512739949084754>", delete_after=5)
 
 
 
