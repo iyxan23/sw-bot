@@ -68,7 +68,7 @@ async def idea(ctx, idea_for="app", idea=None):
     embed = discord.Embed(description="**Idea:** " + idea, color=0x1891fb)
     embed.set_author(name=ctx.message.author.display_name, icon_url=ctx.message.author.avatar_url)
     embed.timestamp = datetime.datetime.utcnow()
-    embed.set_footer(text="SWBot")
+    embed.set_footer(text="Send +idea " + idea_for + " \"your idea\" in <#814828261044650064> to do this")
 
     message = await channel.send(embed=embed)
 
