@@ -83,7 +83,7 @@ async def idea(ctx, idea_for="app", idea=None):
 async def on_reaction_add(reaction, user):
     emojis = ['⬆️', '⬇️']
 
-    # Check if this is us
+    # Check if this is us 
     if reaction.message.author == client.user and user != client.user:
         if reaction.emoji in emojis:
             for react_ in reaction.message.reactions:
