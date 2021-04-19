@@ -63,7 +63,7 @@ async def idea(ctx, idea_for="app", idea=None):
         await ctx.send("Hey, can you put your idea on the 2rd argument?")
         return
 
-    emojis = ['<:upvote:833704877053968397>', '<:downvote:833704893344383085>']
+    emojis = ['⬆️', '⬇️']
 
     embed = discord.Embed(description=f"**Idea:** {idea}\n\nSend `+idea " + idea_for + " \"your idea\"` in <#814828261044650064> to do this", color=0x1891fb)
     embed.set_author(name=ctx.message.author.display_name, icon_url=ctx.message.author.avatar_url)
@@ -93,7 +93,7 @@ async def purge(ctx, amount=1):
 
 @client.event
 async def on_reaction_add(reaction, user):
-    emojis = ['<:upvote:833704877053968397>', '<:downvote:833704893344383085>']
+    emojis = ['⬆️', '⬇️']
 
     # Check if this is us 
     if reaction.message.author == client.user and user != client.user:
