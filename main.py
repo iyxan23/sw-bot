@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 from pretty_help import PrettyHelp # Because I'm lazy
 import os
+import random
 import datetime
 
 client = commands.Bot(command_prefix="+", help_command=PrettyHelp())
@@ -88,6 +89,40 @@ async def purge(ctx, amount=1):
         await ctx.send(content="Purged " + str(amount) + " messages", delete_after=10)
     else:
         await ctx.send("Where is your \"Manage Messages\" permission <:wtfwithtea:826512739949084754>")
+
+@client.command(
+        name="howgay",
+        description="How gay are you <:lmao:792845009400758272>",
+        brief="self-explanatory"
+)
+async def howgay(ctx, who=None):
+    if who is None:
+        who = ctx.author.mention
+
+    description = ""
+
+    gay = random.randint(0, 101)
+
+    if gay == 69:
+        description = f"{who} IS {gay}% GAY!?.!?. w.- T. F.?.!1?!?1..!? :flushed: :flushed: <:uhm:815635169616068609> <:uhm:815635169616068609>"
+
+    elif gay > 0 and gay < 25:
+        description = f"{who} is {gay}% gay <:manhehe:828189506880536626>"
+
+    elif gay > 24 and gay < 50:
+        description = f"{who} is {gay}% gay.. <:bruhmonkey:828189406703779861>"
+
+    elif gay > 49 and gay < 75:
+        description = f"{who} is {gay}% gay! :flushed:"
+
+    elif gay == 101:
+        description = f"OMG RUNNNN {who} IS {gay}% GAY !! AAAAA <:jerryshock:798202239784583198>"
+
+    else:
+        description = f"{who} is {gay}% gay!!! :flushed: <:uhm:815635169616068609>"
+
+    embed = discord.Embed(title="Gay detector machine", description=description, color=0xeb0fc6)
+    await ctx.send(embed=embed)
 
 
 
