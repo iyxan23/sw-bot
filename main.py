@@ -124,6 +124,26 @@ async def howgay(ctx, who=None):
     embed = discord.Embed(title="Gay detector machine", description=description, color=0xeb0fc6)
     await ctx.send(embed=embed)
 
+@client.command(
+        name="howgeh",
+        description="How geh are you <:lmao:792845009400758272>",
+        brief="    g    e    h    "
+)
+async def howgeh(ctx, who=None):
+    if who is None:
+        who = ctx.author.mention
+
+    description = ""
+
+    geh = random.randint(0, 100)
+
+    if gay == 69:
+        description = f"{who} IS {geh}% GEHHH!?.!?. w.- T. F.?.!1?!?1..!?"
+    else:
+        description = f"{who} is {geh}%   g  e  h  "
+
+    embed = discord.Embed(title="  g  e  h  detector machine", description=description, color=0xeb0fc6)
+    await ctx.send(embed=embed)
 
 
 @client.event
