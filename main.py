@@ -84,6 +84,9 @@ async def idea(ctx, idea_for="app", idea=None):
 )
 async def purge(ctx, amount=1):
     if ctx.message.author.guild_permissions.manage_messages:
+        if amount < 0:
+            await ctx.send(content="you")
+            return
         await ctx.message.delete()
         await ctx.channel.purge(limit=amount)
         await ctx.send(content="Purged " + str(amount) + " messages", delete_after=10)
