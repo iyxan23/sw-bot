@@ -16,10 +16,15 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
-    if len(message.content) < 8: return
-    if message.content[:8].lower() == "petition":
-        await message.add_reaction('<:upvote:833702317098008646>')
-        await message.add_reaction('<:downvote:833702170306150440>')
+    if message.author.id == 155149108183695360:
+        if message.content.endswith("Watch your language."):
+            await message.channel.send("dyno, stop it, get some help", delete_after=5)
+    else:
+        if message.author.bot: return
+        if len(message.content) < 8: return
+        if message.content[:8].lower() == "petition":
+            await message.add_reaction('<:upvote:833702317098008646>')
+            await message.add_reaction('<:downvote:833702170306150440>')
 
 
 
