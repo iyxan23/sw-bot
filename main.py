@@ -18,7 +18,7 @@ async def on_ready():
 async def on_message(message):
     if message.content.startswith("petition"):
         await message.add_reaction('<:upvote:833702317098008646>')
-        await mesasge.add_reaction('<:downvote:833702170306150440>')
+        await message.add_reaction('<:downvote:833702170306150440>')
 
 
 
