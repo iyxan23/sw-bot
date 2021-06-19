@@ -16,7 +16,8 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
-    if message.content.startswith("petition"):
+    if len(message.content) < 8: return
+    if message.content[:8].lower() == "petition":
         await message.add_reaction('<:upvote:833702317098008646>')
         await message.add_reaction('<:downvote:833702170306150440>')
 
