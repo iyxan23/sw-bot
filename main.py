@@ -14,6 +14,12 @@ async def on_ready():
     await client.change_presence(status = discord.Status.idle, activity = discord.Game("me por modir"))
     print("Discord bot ready")
 
+@client.event
+async def on_message(message):
+    if message.content.startswith("petition"):
+        await message.add_reaction('<:upvote:833702317098008646>')
+        await mesasge.add_reaction('<:downvote:833702170306150440>')
+
 
 
 @client.command(
