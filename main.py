@@ -106,6 +106,23 @@ async def purge(ctx, amount=1):
         await ctx.send("Where is your \"Manage Messages\" permission <:wtfwithtea:826512739949084754>")
 
 @client.command(
+        name="spurge",
+        alias="sp",
+        description="Like purge but silent",
+        brief="Delete messages silently"
+)
+async def purge(ctx, amount=1):
+    if ctx.message.author.guild_permissions.manage_messages:
+        if amount < 0:
+            await ctx.message.author.send(content=f"why {amount}?????!!?!?!?!????!??!??!?!?!?!??!?!?!??!?")
+            return
+        await ctx.message.delete()
+        await ctx.channel.purge(limit=amount)
+    else:
+        await ctx.message.author.send("Where is your \"Manage Messages\" permission nub <:wtfwithtea:826512739949084754>")
+
+
+@client.command(
         name="howgay",
         description="How gay are you <:lmao:792845009400758272>",
         brief="self-explanatory"
