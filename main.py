@@ -16,17 +16,21 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
+    if (await process_message(message)): await client.process_commands(message)
+
+
+async def process_message(message):
     if message.author.id == 155149108183695360:
         if message.content.endswith("Watch your language."):
             await message.channel.send("dyno, stop it, get some help", delete_after=5)
+            return False
     else:
-        if message.author.bot: return
-        if len(message.content) < 8: return
+        if message.author.bot: return False
+        if len(message.content) < 8: return True
         if message.content[:8].lower() == "petition":
             await message.add_reaction('<:upvote:833702317098008646>')
             await message.add_reaction('<:downvote:833702170306150440>')
-
-
+            return False
 
 @client.command(
         name="ping",
