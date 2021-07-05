@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 from pretty_help import PrettyHelp # Because I'm lazy
+import re
 import os
 import random
 import datetime
@@ -20,6 +21,12 @@ async def on_message(message):
 
 
 async def process_message(message):
+    # #one-word channel
+    if message.channel.id == 861588973571145759:
+        if len(re.split(" |\n", message.content)) != 1:
+            await message.delete()
+            return False
+
     if message.author.id == 155149108183695360:
         if message.content.endswith("Watch your language."):
             await message.channel.send("dyno, stop it, get some help", delete_after=5)
