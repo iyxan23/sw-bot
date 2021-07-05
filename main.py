@@ -180,7 +180,7 @@ async def howgeh(ctx, who=None):
 
     geh = random.randint(0, 100)
 
-    if gay == 69:
+    if geh == 69:
         description = f"{who} IS {geh}% GEHHH!?.!?. w.- T. F.?.!1?!?1..!?"
     else:
         description = f"{who} is {geh}%   g  e  h  "
