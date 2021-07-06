@@ -67,29 +67,19 @@ async def whoami(ctx):
 
 @client.command(
         name="idea",
-        description="Suggest an idea for the app or the server",
+        description="Suggest an idea for sketchware pro",
         brief="Suggest an idea"
 )
-async def idea(ctx, idea_for="app", idea=None):
-    channel = None
-
-    if idea_for == "server":
-        channel = client.get_channel(826514832005136465)
-
-    elif idea_for == "app":
-        channel = client.get_channel(790687893701918730)
-
-    else:
-        await ctx.send("Hey, the 1st parameter can only be \"app\" (suggest something for the mod) or \"server\" (suggest something for the server).")
-        return
+async def idea(ctx, idea=None):
+    channel = client.get_channel(790687893701918730)
 
     if idea == None:
-        await ctx.send("Hey, can you put your idea on the 2rd argument?")
+        await ctx.send("You need to put in your idea on the first argument")
         return
 
     emojis = ['<:upvote:833702317098008646>', '<:downvote:833702170306150440>']
 
-    embed = discord.Embed(description=f"**Idea:** {idea}\n\nSend `+idea " + idea_for + " \"your idea\"` in <#814828261044650064> to do this", color=0x1891fb)
+    embed = discord.Embed(description=f"**Idea:** {idea}\n\nSend `+idea \"your idea\"` in <#814828261044650064> to do this", color=0x1891fb)
     embed.set_author(name=ctx.message.author.display_name, icon_url=ctx.message.author.avatar_url)
     embed.timestamp = datetime.datetime.utcnow()
 
