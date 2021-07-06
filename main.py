@@ -211,9 +211,9 @@ async def howgeh(ctx, who=None):
 async def interject(ctx):
     await ctx.message.delete()
     
-    webhook = await get_webhook(ctx)
+    webhook = await get_webhook(ctx.channel)
 
-    await webhook.send("""""", username=ctx.message.author.display_name, avatar_url=ctx.message.author.avatar_url)
+    await webhook.send(interjection, username=ctx.message.author.display_name, avatar_url=ctx.message.author.avatar_url)
 
 
 @client.event
