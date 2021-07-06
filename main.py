@@ -32,12 +32,14 @@ async def process_message(message):
             await message.channel.send("dyno, stop it, get some help", delete_after=5)
             return False
     else:
-        if message.author.bot: return False
+        if message.author.bot: return True
         if len(message.content) < 8: return True
         if message.content[:8].lower() == "petition":
             await message.add_reaction('<:upvote:833702317098008646>')
             await message.add_reaction('<:downvote:833702170306150440>')
             return False
+        else:
+            return True
 
 @client.command(
         name="ping",
@@ -70,16 +72,18 @@ async def whoami(ctx):
         description="Suggest an idea for sketchware pro",
         brief="Suggest an idea"
 )
-async def idea(ctx, idea=None):
+async def idea(ctx, *argv):
     channel = client.get_channel(790687893701918730)
 
-    if idea == None:
+    if len(argv) == 0:
         await ctx.send("You need to put in your idea on the first argument")
         return
+    
+    idea = " ".join(argv)
 
     emojis = ['<:upvote:833702317098008646>', '<:downvote:833702170306150440>']
 
-    embed = discord.Embed(description=f"**Idea:** {idea}\n\nSend `+idea \"your idea\"` in <#814828261044650064> to do this", color=0x1891fb)
+    embed = discord.Embed(description=f"**Idea:** {idea}\n\nSend `+idea your idea` in <#814828261044650064> to do this", color=0x1891fb)
     embed.set_author(name=ctx.message.author.display_name, icon_url=ctx.message.author.avatar_url)
     embed.timestamp = datetime.datetime.utcnow()
 
