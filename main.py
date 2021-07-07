@@ -342,6 +342,37 @@ async def uninterject(ctx):
     await webhook.send(uninterjection, username=ctx.message.author.display_name, avatar_url=ctx.message.author.avatar_url)
 
 
+@client.command(
+        name="submitswb",
+        description="Submit your swb project to #creations-swb",
+        brief="Submit your swb project to #creations-swb"
+)
+async def submitswb(ctx, *args):
+    text = " ".join(args)
+
+    if len(ctx.attachments) == 0:
+        await ctx.message.reply("You need to attach an swb file")
+        return
+
+    if len(ctx.attachments) > 1:
+        await ctx.message.reply("You can't attach multiple files")
+        return
+
+    if not ctx.attachments[0].filename.endswith(".swb"):
+        split = ctx.attachments[0].filename.split(".")
+        await ctx.message.reply(f"You need to attach an .swb file, not .{split[len(split) - 1]}")
+        return
+    
+    file_ = ctx.attachments[0].to_file()
+    channel = client.get_channel(853779563876319242)
+    
+    embed = discord.Embed(description=text, color=0x0da3e3)
+    embed.set_author(name=ctx.message.author.username, icon_url=ctx.message.author.avatar_url)
+    await ctx.send(content=f"{ctx.message.author.mention} shared an swb project", embed=embed, file=file_)
+
+    await ctx.message.delete()
+
+
 @client.event
 async def on_reaction_add(reaction, user):
     emojis = ['<:upvote:833702317098008646>', '<:downvote:833702170306150440>']
