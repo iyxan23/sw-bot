@@ -111,15 +111,17 @@ idea_cooldowns = {}
         brief="Suggest an idea for sketchware pro"
 )
 async def idea(ctx, *argv):
-    if idea_cooldowns[ctx.author.discriminator]:
-        if idea_cooldowns[ctx.author.discriminator] > time.time():
-            await ctx.channel.send(f"you can only submit an idea for every 30 mins, {ctx.author.mention}. You need to wait {idea_cooldowns[ctx.author.discriminator] - time.time()} seconds", delete_after=10)
-            return
-        else:
-            del idea_cooldowns[ctx.author.discriminator]
-    else:
-        idea_cooldowns[ctx.author.discriminator] = time.time() + 30 * 60 # 30 mins cooldown
+    try:
+        if idea_cooldowns[ctx.author.id]:
+            if idea_cooldowns[ctx.author.id] > time.time():
+                await ctx.channel.send(f"you can only submit an idea for every 30 mins, {ctx.author.mention}. You need to wait {idea_cooldowns[ctx.author.id] - time.time()} seconds", delete_after=10)
+                return
+            else:
+                del idea_cooldowns[ctx.author.id]
+    except KeyError as e:
+        pass
 
+    idea_cooldowns[ctx.author.id] = time.time() + 30 * 60 # 30 mins cooldown
 
     channel = client.get_channel(790687893701918730)
 
@@ -132,7 +134,7 @@ async def idea(ctx, *argv):
     emojis = ['<:upvote:833702317098008646>', '<:downvote:833702170306150440>']
 
     embed = discord.Embed(description=f"**Idea:** {idea}\n\nSend `+idea your idea` in <#814828261044650064> to do this", color=0x1891fb)
-    embed.set_author(name=f"{ctx.message.author.display_name} ({ctx.message.author.discriminator})", icon_url=ctx.message.author.avatar_url)
+    embed.set_author(name=f"{ctx.message.author.display_name}#{ctx.message.author.discriminator}", icon_url=ctx.message.author.avatar_url)
     embed.timestamp = datetime.datetime.utcnow()
 
     message = await channel.send(embed=embed)
@@ -148,14 +150,17 @@ async def idea(ctx, *argv):
         brief="Suggest an idea for the server"
 )
 async def ideaserver(ctx, *argv):
-    if idea_cooldowns[ctx.author.discriminator]:
-        if idea_cooldowns[ctx.author.discriminator] > time.time():
-            await ctx.channel.send(f"you can only submit an idea for every 30 mins, {ctx.author.mention}. You need to wait {idea_cooldowns[ctx.author.discriminator] - time.time()} seconds", delete_after=10)
-            return
-        else:
-            del idea_cooldowns[ctx.author.discriminator]
-    else:
-        idea_cooldowns[ctx.author.discriminator] = time.time() + 30 * 60 # 30 mins cooldown
+    try:
+        if idea_cooldowns[ctx.author.id]:
+            if idea_cooldowns[ctx.author.id] > time.time():
+                await ctx.channel.send(f"you can only submit an idea for every 30 mins, {ctx.author.mention}. You need to wait {idea_cooldowns[ctx.author.id] - time.time()} seconds", delete_after=10)
+                return
+            else:
+                del idea_cooldowns[ctx.author.id]
+    except KeyError as e:
+        pass
+
+    idea_cooldowns[ctx.author.id] = time.time() + 30 * 60 # 30 mins cooldown
 
     channel = client.get_channel(826514832005136465)
 
@@ -168,7 +173,7 @@ async def ideaserver(ctx, *argv):
     emojis = ['<:upvote:833702317098008646>', '<:downvote:833702170306150440>']
 
     embed = discord.Embed(description=f"**Idea:** {idea}\n\nSend `+ideaserver your idea` in <#814828261044650064> to do this", color=0x1891fb)
-    embed.set_author(name=f"{ctx.message.author.display_name} ({ctx.message.author.discriminator})", icon_url=ctx.message.author.avatar_url)
+    embed.set_author(name=f"{ctx.message.author.display_name}#{ctx.message.author.discriminator}", icon_url=ctx.message.author.avatar_url)
     embed.timestamp = datetime.datetime.utcnow()
 
     message = await channel.send(embed=embed)
@@ -273,14 +278,17 @@ async def howgeh(ctx, who=None):
         brief="did someone said linux?"
 )
 async def interject(ctx):
-    if interject_cooldowns[ctx.author.discriminator]:
-        if interject_cooldowns[ctx.author.discriminator] > time.time():
-            await ctx.channel.send(f"Whoa, slow down {ctx.author.mention}!", delete_after=5)
-            return
-        else:
-            del interject_cooldowns[ctx.author.discriminator]
-    else:
-        interject_cooldowns[ctx.author.discriminator] = time.time() + 30 # 30 sec cooldown
+    try:
+        if interject_cooldowns[ctx.author.id]:
+            if interject_cooldowns[ctx.author.id] > time.time():
+                await ctx.channel.send(f"Whoa, slow down {ctx.author.mention}!", delete_after=5)
+                return
+            else:
+                del interject_cooldowns[ctx.author.id]
+    except KeyError as e:
+        pass
+        
+    interject_cooldowns[ctx.author.id] = time.time() + 30 # 30 sec cooldown
         
     await ctx.message.delete()
     
@@ -295,15 +303,18 @@ interject_cooldowns = {}
         description="no richard, it's linux",
         brief="did someone has just interjected?"
 )
-async def interject(ctx):
-    if interject_cooldowns[ctx.author.discriminator]:
-        if interject_cooldowns[ctx.author.discriminator] > time.time():
-            await ctx.channel.send(f"Whoa, slow down {ctx.author.mention}!", delete_after=5)
-            return
-        else:
-            del interject_cooldowns[ctx.author.discriminator]
-    else:
-        interject_cooldowns[ctx.author.discriminator] = time.time() + 30 # 30 sec cooldown
+async def uninterject(ctx):
+    try:
+        if interject_cooldowns[ctx.author.id]:
+            if interject_cooldowns[ctx.author.id] > time.time():
+                await ctx.channel.send(f"Whoa, slow down {ctx.author.mention}!", delete_after=5)
+                return
+            else:
+                del interject_cooldowns[ctx.author.id]
+    except KeyError as e:
+        pass
+        
+    interject_cooldowns[ctx.author.id] = time.time() + 30 # 30 sec cooldown
 
     await ctx.message.delete()
     
