@@ -33,21 +33,21 @@ Last, I'd like to point out that we Linux and GNU users shouldn't be fighting am
 def string_time_thing(time):
     # copied this from stackoverflow :troll:
     seconds_in = {
-         'year'  : 365 * 24 * 60 * 60,
-         'month' : 30 * 24 * 60 * 60,
-         'day'   : 24 * 60 * 60,
-         'hour'  : 60 * 60,
-         'minute': 60
-     }
+        'year'  : 365 * 24 * 60 * 60,
+        'month' : 30 * 24 * 60 * 60,
+        'day'   : 24 * 60 * 60,
+        'hour'  : 60 * 60,
+        'minute': 60
+    }
 
-     years, rem = divmod(time, seconds_in['year'])
-     months, rem = divmod(rem, seconds_in['month'])
-     days, rem = divmod(rem, seconds_in['day'])
-     hours, rem = divmod(rem, seconds_in['hour'])
-     minutes, rem = divmod(rem, seconds_in['minute'])
-     seconds = rem 
+    years, rem = divmod(time, seconds_in['year'])
+    months, rem = divmod(rem, seconds_in['month'])
+    days, rem = divmod(rem, seconds_in['day'])
+    hours, rem = divmod(rem, seconds_in['hour'])
+    minutes, rem = divmod(rem, seconds_in['minute'])
+    seconds = rem 
 
-     return (f"{years} year(s) " if years != 0 else "") + (f"{months} month(s) " if months != 0 else "") + (f"{days} day(s) " if days != 0 else "") + (f"{hours} hour(s) " if hours != 0 else "") + (f"{minutes} minute(s) " if minutes != 0 else "") + (f"{seconds} second(s)" if seconds != 0 else "")
+    return (f"{years} year(s) " if years != 0 else "") + (f"{months} month(s) " if months != 0 else "") + (f"{days} day(s) " if days != 0 else "") + (f"{hours} hour(s) " if hours != 0 else "") + (f"{minutes} minute(s) " if minutes != 0 else "") + (f"{seconds} second(s)" if seconds != 0 else "")
 
 async def get_webhook(ctx): 
     webhooks = await ctx.webhooks()
