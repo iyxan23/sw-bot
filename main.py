@@ -113,7 +113,7 @@ idea_cooldowns = {}
 async def idea(ctx, *argv):
     if idea_cooldowns[ctx.author.discriminator]:
         if idea_cooldowns[ctx.author.discriminator] > time.time():
-            await ctx.channel.send(f"you can only submit an idea for every 30 mins, {ctx.author.mention}. You need to wait {idea_cooldowns[ctx.author.discriminator] - time.time()} seconds" delete_after=10)
+            await ctx.channel.send(f"you can only submit an idea for every 30 mins, {ctx.author.mention}. You need to wait {idea_cooldowns[ctx.author.discriminator] - time.time()} seconds", delete_after=10)
             return
         else:
             del idea_cooldowns[ctx.author.discriminator]
@@ -150,7 +150,7 @@ async def idea(ctx, *argv):
 async def ideaserver(ctx, *argv):
     if idea_cooldowns[ctx.author.discriminator]:
         if idea_cooldowns[ctx.author.discriminator] > time.time():
-            await ctx.channel.send(f"you can only submit an idea for every 30 mins, {ctx.author.mention}. You need to wait {idea_cooldowns[ctx.author.discriminator] - time.time()} seconds" delete_after=10)
+            await ctx.channel.send(f"you can only submit an idea for every 30 mins, {ctx.author.mention}. You need to wait {idea_cooldowns[ctx.author.discriminator] - time.time()} seconds", delete_after=10)
             return
         else:
             del idea_cooldowns[ctx.author.discriminator]
@@ -275,7 +275,7 @@ async def howgeh(ctx, who=None):
 async def interject(ctx):
     if interject_cooldowns[ctx.author.discriminator]:
         if interject_cooldowns[ctx.author.discriminator] > time.time():
-            await ctx.channel.send(f"Whoa, slow down {ctx.author.mention}!" delete_after=5)
+            await ctx.channel.send(f"Whoa, slow down {ctx.author.mention}!", delete_after=5)
             return
         else:
             del interject_cooldowns[ctx.author.discriminator]
@@ -298,7 +298,7 @@ interject_cooldowns = {}
 async def interject(ctx):
     if interject_cooldowns[ctx.author.discriminator]:
         if interject_cooldowns[ctx.author.discriminator] > time.time():
-            await ctx.channel.send(f"Whoa, slow down {ctx.author.mention}!" delete_after=5)
+            await ctx.channel.send(f"Whoa, slow down {ctx.author.mention}!", delete_after=5)
             return
         else:
             del interject_cooldowns[ctx.author.discriminator]
