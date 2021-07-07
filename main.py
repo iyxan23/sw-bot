@@ -5,6 +5,7 @@ import re
 import os
 import random
 import datetime
+import time
 
 client = commands.Bot(command_prefix="+", help_command=PrettyHelp())
 token = os.getenv("DISCORD_BOT_TOKEN")
@@ -101,6 +102,8 @@ async def whoami(ctx):
     await ctx.send(f"You're {ctx.message.author.name}, dum dum")
 
 
+idea_cooldowns = {}
+
 
 @client.command(
         name="idea",
@@ -108,6 +111,16 @@ async def whoami(ctx):
         brief="Suggest an idea for sketchware pro"
 )
 async def idea(ctx, *argv):
+    if idea_cooldowns[ctx.author.discriminator]:
+        if idea_cooldowns[ctx.author.discriminator] > time.time():
+            await ctx.channel.send(f"you can only submit an idea for every 30 mins, {ctx.author.mention}. You need to wait {idea_cooldowns[ctx.author.discriminator] - time.time()} seconds" delete_after=10)
+            return
+        else:
+            del idea_cooldowns[ctx.author.discriminator]
+    else:
+        idea_cooldowns[ctx.author.discriminator] = time.time() + 30 * 60 # 30 mins cooldown
+
+
     channel = client.get_channel(790687893701918730)
 
     if len(argv) == 0:
@@ -134,7 +147,16 @@ async def idea(ctx, *argv):
         description="Suggest an idea for the server",
         brief="Suggest an idea for the server"
 )
-async def idea(ctx, *argv):
+async def ideaserver(ctx, *argv):
+    if idea_cooldowns[ctx.author.discriminator]:
+        if idea_cooldowns[ctx.author.discriminator] > time.time():
+            await ctx.channel.send(f"you can only submit an idea for every 30 mins, {ctx.author.mention}. You need to wait {idea_cooldowns[ctx.author.discriminator] - time.time()} seconds" delete_after=10)
+            return
+        else:
+            del idea_cooldowns[ctx.author.discriminator]
+    else:
+        idea_cooldowns[ctx.author.discriminator] = time.time() + 30 * 60 # 30 mins cooldown
+
     channel = client.get_channel(826514832005136465)
 
     if len(argv) == 0:
@@ -179,7 +201,7 @@ async def purge(ctx, amount=1):
         description="Like purge but silent",
         brief="Delete messages silently"
 )
-async def purge(ctx, amount=1):
+async def spurge(ctx, amount=1):
     if ctx.message.author.guild_permissions.manage_messages:
         if amount < 0:
             await ctx.message.author.send(content=f"why {amount}?????!!?!?!?!????!??!??!?!?!?!??!?!?!??!?")
@@ -251,11 +273,22 @@ async def howgeh(ctx, who=None):
         brief="did someone said linux?"
 )
 async def interject(ctx):
+    if interject_cooldowns[ctx.author.discriminator]:
+        if interject_cooldowns[ctx.author.discriminator] > time.time():
+            await ctx.channel.send(f"Whoa, slow down {ctx.author.mention}!" delete_after=5)
+            return
+        else:
+            del interject_cooldowns[ctx.author.discriminator]
+    else:
+        interject_cooldowns[ctx.author.discriminator] = time.time() + 30 # 30 sec cooldown
+        
     await ctx.message.delete()
     
     webhook = await get_webhook(ctx.channel)
 
     await webhook.send(interjection, username=ctx.message.author.display_name, avatar_url=ctx.message.author.avatar_url)
+
+interject_cooldowns = {}
 
 @client.command(
         name="uninterject",
@@ -263,6 +296,15 @@ async def interject(ctx):
         brief="did someone has just interjected?"
 )
 async def interject(ctx):
+    if interject_cooldowns[ctx.author.discriminator]:
+        if interject_cooldowns[ctx.author.discriminator] > time.time():
+            await ctx.channel.send(f"Whoa, slow down {ctx.author.mention}!" delete_after=5)
+            return
+        else:
+            del interject_cooldowns[ctx.author.discriminator]
+    else:
+        interject_cooldowns[ctx.author.discriminator] = time.time() + 30 # 30 sec cooldown
+
     await ctx.message.delete()
     
     webhook = await get_webhook(ctx.channel)
