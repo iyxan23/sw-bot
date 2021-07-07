@@ -105,7 +105,7 @@ async def whoami(ctx):
 @client.command(
         name="idea",
         description="Suggest an idea for sketchware pro",
-        brief="Suggest an idea"
+        brief="Suggest an idea for sketchware pro"
 )
 async def idea(ctx, *argv):
     channel = client.get_channel(790687893701918730)
@@ -128,6 +128,34 @@ async def idea(ctx, *argv):
     
     for emoji in emojis:
         await message.add_reaction(emoji)
+
+@client.command(
+        name="ideaserver",
+        description="Suggest an idea for the server",
+        brief="Suggest an idea for the server"
+)
+async def idea(ctx, *argv):
+    channel = client.get_channel(826514832005136465)
+
+    if len(argv) == 0:
+        await ctx.send("You need to put in your idea on the first argument")
+        return
+    
+    idea = " ".join(argv)
+
+    emojis = ['<:upvote:833702317098008646>', '<:downvote:833702170306150440>']
+
+    embed = discord.Embed(description=f"**Idea:** {idea}\n\nSend `+ideaserver your idea` in <#814828261044650064> to do this", color=0x1891fb)
+    embed.set_author(name=ctx.message.author.display_name, icon_url=ctx.message.author.avatar_url)
+    embed.timestamp = datetime.datetime.utcnow()
+
+    message = await channel.send(embed=embed)
+
+    await ctx.message.delete()
+    
+    for emoji in emojis:
+        await message.add_reaction(emoji)
+
 
 @client.command(
         name="purge",
