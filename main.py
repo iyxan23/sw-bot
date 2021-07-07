@@ -114,7 +114,7 @@ async def idea(ctx, *argv):
     try:
         if idea_cooldowns[ctx.author.id]:
             if idea_cooldowns[ctx.author.id] > time.time():
-                await ctx.channel.send(f"you can only submit an idea for every 30 mins, {ctx.author.mention}. You need to wait {idea_cooldowns[ctx.author.id] - time.time()} seconds", delete_after=10)
+                await ctx.message.reply(f"you need to wait {int(idea_cooldowns[ctx.author.id] - time.time())} seconds before submitting another idea <:sadTroll:849956944478208010>", delete_after=30)
                 return
             else:
                 del idea_cooldowns[ctx.author.id]
@@ -153,7 +153,7 @@ async def ideaserver(ctx, *argv):
     try:
         if idea_cooldowns[ctx.author.id]:
             if idea_cooldowns[ctx.author.id] > time.time():
-                await ctx.channel.send(f"you can only submit an idea for every 30 mins, {ctx.author.mention}. You need to wait {idea_cooldowns[ctx.author.id] - time.time()} seconds", delete_after=10)
+                await ctx.message.reply(f"you need to wait {int(idea_cooldowns[ctx.author.id] - time.time())} seconds before submitting another idea <:sadTroll:849956944478208010>", delete_after=30)
                 return
             else:
                 del idea_cooldowns[ctx.author.id]
