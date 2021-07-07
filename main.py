@@ -30,6 +30,25 @@ You seem to like the lines-of-code metric. There are many lines of GNU code in a
 
 Last, I'd like to point out that we Linux and GNU users shouldn't be fighting among ourselves over naming other people's software. But what the heck, I'm in a bad mood now. I think I'm feeling sufficiently obnoxious to make the point that GCC is so very famous and, yes, so very useful only because Linux was developed. In a show of proper respect and gratitude, shouldn't you and everyone refer to GCC as 'the Linux compiler'? Or at least, 'Linux GCC'? Seriously, where would your masterpiece be without Linux? Languishing with the HURD?"""
 
+def string_time_thing(time):
+    # copied this from stackoverflow :troll:
+    seconds_in = {
+         'year'  : 365 * 24 * 60 * 60,
+         'month' : 30 * 24 * 60 * 60,
+         'day'   : 24 * 60 * 60,
+         'hour'  : 60 * 60,
+         'minute': 60
+     }
+
+     years, rem = divmod(time, seconds_in['year'])
+     months, rem = divmod(rem, seconds_in['month'])
+     days, rem = divmod(rem, seconds_in['day'])
+     hours, rem = divmod(rem, seconds_in['hour'])
+     minutes, rem = divmod(rem, seconds_in['minute'])
+     seconds = rem 
+
+     return (f"{years} year(s) " if years != 0 else "") + (f"{months} month(s) " if months != 0 else "") + (f"{days} day(s) " if days != 0 else "") + (f"{hours} hour(s) " if hours != 0 else "") + (f"{minutes} minute(s) " if minutes != 0 else "") + (f"{seconds} second(s)" if seconds != 0 else "")
+
 async def get_webhook(ctx): 
     webhooks = await ctx.webhooks()
 
@@ -114,7 +133,7 @@ async def idea(ctx, *argv):
     try:
         if idea_cooldowns[ctx.author.id]:
             if idea_cooldowns[ctx.author.id] > time.time():
-                await ctx.message.reply(f"you need to wait {int(idea_cooldowns[ctx.author.id] - time.time())} seconds before submitting another idea <:sadTroll:849956944478208010>", delete_after=30)
+                await ctx.message.reply(f"you need to wait {string_time_thing(int(idea_cooldowns[ctx.author.id] - time.time()))} before submitting another idea <:sadTroll:849956944478208010>", delete_after=30)
                 return
             else:
                 del idea_cooldowns[ctx.author.id]
@@ -153,7 +172,7 @@ async def ideaserver(ctx, *argv):
     try:
         if idea_cooldowns[ctx.author.id]:
             if idea_cooldowns[ctx.author.id] > time.time():
-                await ctx.message.reply(f"you need to wait {int(idea_cooldowns[ctx.author.id] - time.time())} seconds before submitting another idea <:sadTroll:849956944478208010>", delete_after=30)
+                await ctx.message.reply(f"you need to wait {string_time_thing(int(idea_cooldowns[ctx.author.id] - time.time()))} before submitting another idea <:sadTroll:849956944478208010>", delete_after=30)
                 return
             else:
                 del idea_cooldowns[ctx.author.id]
