@@ -119,7 +119,7 @@ async def idea(ctx, *argv):
     emojis = ['<:upvote:833702317098008646>', '<:downvote:833702170306150440>']
 
     embed = discord.Embed(description=f"**Idea:** {idea}\n\nSend `+idea your idea` in <#814828261044650064> to do this", color=0x1891fb)
-    embed.set_author(name=ctx.message.author.display_name, icon_url=ctx.message.author.avatar_url)
+    embed.set_author(name=f"{ctx.message.author.display_name} ({ctx.message.author.discriminator})", icon_url=ctx.message.author.avatar_url)
     embed.timestamp = datetime.datetime.utcnow()
 
     message = await channel.send(embed=embed)
@@ -146,7 +146,7 @@ async def idea(ctx, *argv):
     emojis = ['<:upvote:833702317098008646>', '<:downvote:833702170306150440>']
 
     embed = discord.Embed(description=f"**Idea:** {idea}\n\nSend `+ideaserver your idea` in <#814828261044650064> to do this", color=0x1891fb)
-    embed.set_author(name=ctx.message.author.display_name, icon_url=ctx.message.author.avatar_url)
+    embed.set_author(name=f"{ctx.message.author.display_name} ({ctx.message.author.discriminator})", icon_url=ctx.message.author.avatar_url)
     embed.timestamp = datetime.datetime.utcnow()
 
     message = await channel.send(embed=embed)
