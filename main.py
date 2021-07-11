@@ -126,8 +126,8 @@ idea_cooldowns = {}
 
 @client.command(
         name="idea",
-        description="Suggest an idea for sketchware pro",
-        brief="Suggest an idea for sketchware pro"
+        description="Suggest an idea for Sketchware Pro",
+        brief="Suggest an idea for ẞketchware Pro"
 )
 async def idea(ctx, *argv):
     try:
