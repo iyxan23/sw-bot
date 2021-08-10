@@ -76,9 +76,11 @@ async def on_message(message):
 
 
 async def process_message(message):
-    # #one-word channel
-    if message.channel.id == 861588973571145759:
-        if len(re.split(" |\n", message.content)) != 1:
+    # #only-spoilers-chat channel
+    if message.channel.id == 867897254031786024:
+        spoilers = len(re.findall("\|\|"))
+
+        if spoilers % 2 == 1 or spoilers == 0:
             await message.delete()
             return False
 
