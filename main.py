@@ -309,7 +309,7 @@ async def interject(ctx):
     except KeyError as e:
         pass
         
-    interject_cooldowns[ctx.author.id] = time.time() + 30 # 30 sec cooldown
+    interject_cooldowns[ctx.author.id] = time.time() + 600 # 10 mins cooldown
         
     await ctx.message.delete()
     
@@ -335,7 +335,7 @@ async def uninterject(ctx):
     except KeyError as e:
         pass
         
-    interject_cooldowns[ctx.author.id] = time.time() + 30 # 30 sec cooldown
+    interject_cooldowns[ctx.author.id] = time.time() + 600 # 10 mins cooldown
 
     await ctx.message.delete()
     
