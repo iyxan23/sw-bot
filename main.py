@@ -4,7 +4,7 @@ import discord
 from discord.ext import commands
 from pretty_help import PrettyHelp  # Because I'm lazy
 
-from cogs import fun_stuff, server_essentials, utilities
+from cogs import fun_stuff, server_essentials, utilities, statistics
 
 client = commands.Bot(
     command_prefix="+",
@@ -65,5 +65,6 @@ async def on_reaction_add(reaction, user):
 client.add_cog(utilities.Utilities(client))
 client.add_cog(fun_stuff.FunStuff(client))
 client.add_cog(server_essentials.ServerEssentials(client))
+client.add_cog(statistics.Statistics(client))
 
 client.run(token)
