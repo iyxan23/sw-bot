@@ -9,7 +9,7 @@ from cogs import fun_stuff, server_essentials, utilities
 client = commands.Bot(
     command_prefix="+",
     description="Sketchware Pro's official discord bot",
-    help_command=PrettyHelp()
+    help_command=PrettyHelp(color=discord.colour.Colour(0x349afe))
 )
 
 token = os.getenv("DISCORD_BOT_TOKEN")
