@@ -37,6 +37,23 @@ class ServerEssentials(commands.Cog, name="Server Essentials"):
         self.bot = bot
         self.idea_cool_downs = {}
 
+    @commands.Cog.listener()
+    async def on_reaction_add(self, reaction, user):
+        # Disallow users to cast two votes
+        emojis = ['<:upvote:833702317098008646>', '<:downvote:833702170306150440>']
+
+        # Check if this is us
+        if reaction.message.author == self.bot.user and user != self.bot.user:
+            if reaction.emoji in emojis:
+                for react_ in reaction.message.reactions:
+                    if react_.emoji == reaction.emoji:
+                        continue
+
+                    users = await react_.users().flatten()
+                    if user in users:
+                        await reaction.message.remove_reaction(react_.emoji, user)
+                        return
+
     @commands.command(
         name="idea",
         description="Suggest an idea for Sketchware Pro",
