@@ -174,11 +174,3 @@ class ServerEssentials(commands.Cog, name="Server Essentials"):
 
         await ctx.message.delete()
         await wait.delete()
-
-    @commands.command(
-        name="stats",
-        description="This command shows the messages statistics in this server",
-        brief="Shows messages statistics"
-    )
-    async def stats(self, ctx):
-        await ctx.message.channel.send("damb")
