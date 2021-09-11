@@ -4,10 +4,10 @@ import time
 import discord
 from discord.ext import commands
 
-with open("../interjection.txt", "r") as f:
+with open("interjection.txt", "r") as f:
     interjection = f.read()
 
-with open("../uninterjection.txt", "r") as f:
+with open("uninterjection.txt", "r") as f:
     rs = f.read().split("|||||")
 
     uninterjection = rs[0]
