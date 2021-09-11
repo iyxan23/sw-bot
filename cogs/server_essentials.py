@@ -31,6 +31,8 @@ def string_time_thing(time):
 
 
 class ServerEssentials(commands.Cog, name="Server Essentials"):
+    """Sketchware Pro discord server specific commands like idea, shareswb, etc"""
+
     def __init__(self, bot):
         self.bot = bot
         self.idea_cool_downs = {}

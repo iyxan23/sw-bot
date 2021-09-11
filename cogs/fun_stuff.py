@@ -15,6 +15,8 @@ with open("uninterjection.txt", "r") as f:
 
 
 class FunStuff(commands.Cog, name="Fun stuff"):
+    """Fun commands to play around with"""
+
     def __init__(self, bot):
         self.bot = bot
         self.interject_cool_downs = {}
