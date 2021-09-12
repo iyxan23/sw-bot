@@ -12,6 +12,8 @@ client = commands.Bot(
     help_command=PrettyHelp(color=discord.colour.Colour(0x349afe))
 )
 
+client.owner_ids = [574128504451366913]
+
 token = os.getenv("DISCORD_BOT_TOKEN")
 
 

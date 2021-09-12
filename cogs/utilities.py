@@ -1,4 +1,7 @@
 from discord.ext import commands
+from psycopg2 import ProgrammingError
+
+from cogs.database_connection import connection
 
 
 class Utilities(commands.Cog, name="Utilities"):
@@ -63,6 +66,30 @@ class Utilities(commands.Cog, name="Utilities"):
         else:
             await ctx.message.author.send(
                 "Where is your \"Manage Messages\" permission nub <:wtfwithtea:826512739949084754>")
+
+    @commands.command(
+        name="query",
+        description="none of your business",
+        brief="yes"
+    )
+    @commands.is_owner()
+    async def query(self, ctx, query: str):
+        with connection.cursor() as cur:
+            cur.execute(query)
+
+            result = ""
+            try:
+                while (fetched := cur.fetchone()) is not None:
+                    result += f"{fetched}\n"
+
+            except ProgrammingError:
+                # this is when the owner queries an sql command that doesn't output anything, like INSERT
+                pass
+
+            if result.strip() != "":
+                await ctx.send(result)
+
+            connection.commit()
 
     async def get_webhook(self, ctx):
         webhooks = await ctx.webhooks()

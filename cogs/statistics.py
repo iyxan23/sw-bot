@@ -1,13 +1,7 @@
-import copy
-import os
-import queue
-
 import discord
-import psycopg2
 from discord.ext import commands, tasks
-
-DATABASE_CREDENTIALS = os.environ['DATABASE_CREDENTIALS']
-connection = psycopg2.connect(DATABASE_CREDENTIALS)
+import queue
+from cogs.database_connection import connection
 
 
 class Statistics(commands.Cog, name="Statistics"):
@@ -101,3 +95,47 @@ class Statistics(commands.Cog, name="Statistics"):
 
         embed.set_footer(text=f"Requested by {ctx.author.display_name}#{ctx.author.discriminator}")
         await ctx.send(embed=embed)
+
+    @commands.has_permissions(manage_messages=True)
+    @commands.command(
+        name="stats_set",
+        description="Running this command will update the message count in the statistics for the specified member",
+        brief="Updates the statistics for the specified member",
+    )
+    async def stats_set(self, ctx: commands.Context, member: discord.Member, count: int):
+        with connection.cursor() as cur:
+            cur.execute("SELECT EXISTS (SELECT 1 FROM messages_count WHERE user_id = %s)", (member.id, ))
+
+            if cur.fetchone()[0]:
+                cur.execute("UPDATE messages_count SET count = %s WHERE user_id = %s", (count, member.id))
+            else:
+                cur.execute("INSERT INTO messages_count (user_id, count) VALUES (%s, %s)", (member.id, count))
+
+            connection.commit()
+
+        await ctx.send(
+            f"User {member.display_name}#{member.discriminator}'s messages count is now updated to {count}",
+            delete_after=5
+        )
+
+    @commands.has_permissions(manage_messages=True)
+    @commands.command(
+        name="stats_add",
+        description="Running this command will update the message count in the statistics for the specified member",
+        brief="Updates the statistics for the specified member",
+    )
+    async def stats_add(self, ctx: commands.Context, member: discord.Member, count: int):
+        with connection.cursor() as cur:
+            cur.execute("SELECT EXISTS (SELECT 1 FROM messages_count WHERE user_id = %s)", (member.id, ))
+
+            if cur.fetchone()[0]:
+                cur.execute("UPDATE messages_count SET count = count + %s WHERE user_id = %s", (count, member.id))
+            else:
+                cur.execute("INSERT INTO messages_count (user_id, count) VALUES (%s, %s)", (member.id, count))
+
+            connection.commit()
+
+        await ctx.send(
+            f"User {member.display_name}#{member.discriminator}'s messages count has added {count}",
+            delete_after=5
+        )
