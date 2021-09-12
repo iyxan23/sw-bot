@@ -22,9 +22,9 @@ async def on_ready():
 
 
 # Cogs go br
-client.add_cog(utilities.Utilities(client))
-client.add_cog(fun_stuff.FunStuff(client))
 client.add_cog(server_essentials.ServerEssentials(client))
 client.add_cog(statistics.Statistics(client))
+client.add_cog(utilities.Utilities(client))
+client.add_cog(fun_stuff.FunStuff(client))
 
 client.run(token)
