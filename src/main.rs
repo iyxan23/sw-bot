@@ -25,6 +25,7 @@ use std::time::Instant;
 
 #[group]
 #[commands(ping)]
+#[commands(help)]
 struct General;
 
 struct Handler;
@@ -59,10 +60,23 @@ async fn main() {
 }
 
 #[command]
+async fn help(ctx: &Context, msg: &Message) -> CommandResult {
+    msg.channel_id
+        .send_message(ctx, |m| {
+            m.add_embed(|e| {
+                // TODO: Implement a centralized way to define documents for each commands
+                e   .title("Help")
+                    .description("Hello world")
+            })
+        }).await?;
+
+    Ok(())
+}
+
+#[command]
 async fn ping(ctx: &Context, msg: &Message) -> CommandResult {
     let start = Instant::now();
     let mut msg = msg.reply(ctx, "Pong! :ping_pong:").await?;
-
     let duration = start.elapsed();
 
     msg.edit(
