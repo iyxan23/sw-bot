@@ -70,13 +70,34 @@ class Statistics(commands.Cog, name="Statistics"):
         brief="Statistics of the Sketchware Pro discord server",
     )
     async def stats(self, ctx: commands.Context):
-        result = ""
+        active_members = {}
 
         with connection.cursor() as cur:
-            cur.execute("SELECT * FROM messages_count ORDER BY count DESC LIMIT 5")
+            cur.execute("SELECT * FROM messages_count ORDER BY count DESC LIMIT 10")
 
             while (entry := cur.fetchone()) is not None:
-                print(entry)
-                result += f"{entry[0]} - {entry[1]} total messages\n"
+                active_members[entry[0]] = entry[1]
 
-        await ctx.send(result)
+        embed = discord.Embed(
+            title="Statistics",
+            description="Statistics of the Sketchware Pro discord server",
+            color=0x349afe
+        )
+
+        active_members_field = ""
+        active_members_messages = ""
+
+        for user_id, count in active_members.items():
+            active_members_field += f"<@{user_id}>\n"
+            active_members_messages += f"{count}\n"
+
+        embed.add_field(name="Active Members", value=active_members_field, inline=True)
+        embed.add_field(name="Messages", value=active_members_messages, inline=True)
+
+        embed.add_field(name="Total messages", value="WIP", inline=False)
+        embed.add_field(name="Average Messages", value="WIP", inline=True)
+
+        embed.add_field(name="Today", value="WIP", inline=True)
+
+        embed.set_footer(text=f"Requested by {ctx.author.display_name}#{ctx.author.discriminator}")
+        await ctx.send(embed=embed)
