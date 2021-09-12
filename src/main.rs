@@ -1,6 +1,16 @@
 use serenity::async_trait;
-use serenity::client::{Client, Context, EventHandler};
-use serenity::model::channel::Message;
+use serenity::client::{ Client, Context, EventHandler };
+use serenity::model::{
+    channel::{
+        Message
+    },
+    event::{
+        ResumedEvent
+    },
+    gateway::{
+        Ready
+    }
+};
 use serenity::framework::standard::{
     StandardFramework,
     CommandResult,
@@ -20,7 +30,15 @@ struct General;
 struct Handler;
 
 #[async_trait]
-impl EventHandler for Handler {}
+impl EventHandler for Handler {
+    async fn ready(&self, _: Context, bot: Ready) {
+        println!("{}#{} is ready", bot.user.name, bot.user.discriminator);
+    }
+
+    async fn resume(&self, _: Context, _: ResumedEvent) {
+        println!("Resumed");
+    }
+}
 
 #[tokio::main]
 async fn main() {
