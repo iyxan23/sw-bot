@@ -26,7 +26,8 @@ use serenity::{
         CommandResult,
         macros::{
             group,
-            help
+            help,
+            hook
         },
         Args,
         HelpOptions,
@@ -70,6 +71,7 @@ impl EventHandler for Handler {
 async fn main() {
     let framework = StandardFramework::new()
         .configure(|c| c.prefix("+"))
+        .after(after)
         .group(&UTILITIES_GROUP)
         .group(&FUNSTUFF_GROUP)
         .help(&HELP);
@@ -83,6 +85,24 @@ async fn main() {
 
     if let Err(why) = client.start().await {
         println!("An error occurred while running the client: {:?}", why);
+    }
+}
+
+#[hook]
+async fn after(_ctx: &Context, _msg: &Message, command_name: &str, command_result: CommandResult) {
+    if let Err(why) = command_result {
+        println!("Command '{}' returned error {:?}", command_name, why);
+
+        let result = _msg.reply(_ctx,
+            format!(
+                "The command `{}` failed to run and returned an error, this error will be forwarded to the devs.",
+                command_name
+            )
+        ).await;
+
+        if result.is_err() {
+            println!("Failed to send the error message, {:?}", result.unwrap_err());
+        }
     }
 }
 
