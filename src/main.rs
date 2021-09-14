@@ -1,31 +1,49 @@
-use serenity::async_trait;
-use serenity::client::{ Client, Context, EventHandler };
-use serenity::model::{
-    channel::{
-        Message
+use serenity::{
+    async_trait,
+    client::{
+        Client,
+        Context,
+        EventHandler
     },
-    event::{
-        ResumedEvent
+    model::{
+        channel::{
+            Message
+        },
+        event::{
+            ResumedEvent
+        },
+        gateway::{
+            Ready
+        },
+        id::{
+            UserId
+        }
     },
-    gateway::{
-        Ready
+    framework::standard::{
+        StandardFramework,
+        CommandResult,
+        macros::{
+            command,
+            group,
+            help
+        },
+        Args,
+        HelpOptions,
+        CommandGroup,
+        help_commands
+    },
+    utils::{
+        Colour
     }
 };
-use serenity::framework::standard::{
-    StandardFramework,
-    CommandResult,
-    macros::{
-        command,
-        group
-    }
-};
+use serenity::prelude::*;
 
 use std::env;
 use std::time::Instant;
+use std::collections::HashSet;
 
 #[group]
 #[commands(ping)]
-#[commands(help)]
 struct General;
 
 struct Handler;
@@ -45,7 +63,8 @@ impl EventHandler for Handler {
 async fn main() {
     let framework = StandardFramework::new()
         .configure(|c| c.prefix("+"))
-        .group(&GENERAL_GROUP);
+        .group(&GENERAL_GROUP)
+        .help(&HELP);
 
     let token = env::var("DISCORD_BOT_TOKEN").expect("token");
     let mut client = Client::builder(token)
@@ -59,21 +78,37 @@ async fn main() {
     }
 }
 
-#[command]
-async fn help(ctx: &Context, msg: &Message) -> CommandResult {
-    msg.channel_id
-        .send_message(ctx, |m| {
-            m.add_embed(|e| {
-                // TODO: Implement a centralized way to define documents for each commands
-                e   .title("Help")
-                    .description("Hello world")
-            })
-        }).await?;
+#[help]
+#[individual_command_tip = "\
+Hello, If you want more information about a specific command, just pass the command as argument.\n
+Something like
+```
++help ping
+```"]
+#[command_not_found_text = "Could not find: `{}`."]
+#[embed_success_colour = "#349afe"]
+async fn help(
+    context: &Context,
+    msg: &Message,
+    args: Args,
+    help_options: &'static HelpOptions,
+    groups: &[&'static CommandGroup],
+    owners: HashSet<UserId>,
+) -> CommandResult {
+    help_commands::with_embeds(
+        context,
+        msg,
+        args,
+        help_options,
+        groups,
+        owners
+    ).await;
 
     Ok(())
 }
 
 #[command]
+#[description = "Shows the ping of the bot"]
 async fn ping(ctx: &Context, msg: &Message) -> CommandResult {
     let start = Instant::now();
     let mut msg = msg.reply(ctx, "Pong! :ping_pong:").await?;
