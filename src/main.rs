@@ -1,3 +1,5 @@
+mod commands;
+
 use serenity::{
     async_trait,
     client::{
@@ -23,7 +25,6 @@ use serenity::{
         StandardFramework,
         CommandResult,
         macros::{
-            command,
             group,
             help
         },
@@ -32,19 +33,19 @@ use serenity::{
         CommandGroup,
         help_commands
     },
-    utils::{
-        Colour
-    }
 };
-use serenity::prelude::*;
 
 use std::env;
-use std::time::Instant;
 use std::collections::HashSet;
 
+use commands::{
+    utilities::*
+};
+
 #[group]
-#[commands(ping)]
-struct General;
+#[commands(ping, whoami)]
+#[description = "Utility commands"]
+struct Utilities;
 
 struct Handler;
 
@@ -63,7 +64,7 @@ impl EventHandler for Handler {
 async fn main() {
     let framework = StandardFramework::new()
         .configure(|c| c.prefix("+"))
-        .group(&GENERAL_GROUP)
+        .group(&UTILITIES_GROUP)
         .help(&HELP);
 
     let token = env::var("DISCORD_BOT_TOKEN").expect("token");
@@ -103,24 +104,6 @@ async fn help(
         groups,
         owners
     ).await;
-
-    Ok(())
-}
-
-#[command]
-#[description = "Shows the ping of the bot"]
-async fn ping(ctx: &Context, msg: &Message) -> CommandResult {
-    let start = Instant::now();
-    let mut msg = msg.reply(ctx, "Pong! :ping_pong:").await?;
-    let duration = start.elapsed();
-
-    msg.edit(
-        ctx,
-        |edit_msg|
-            edit_msg.content(
-                format!("Pong! :ping_pong: That took {}ms", (duration.as_millis()))
-            )
-    ).await?;
 
     Ok(())
 }
