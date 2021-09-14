@@ -39,13 +39,19 @@ use std::env;
 use std::collections::HashSet;
 
 use commands::{
-    utilities::*
+    utilities::*,
+    fun_stuff::*
 };
 
 #[group]
 #[commands(ping, whoami)]
 #[description = "Utility commands"]
 struct Utilities;
+
+#[group]
+#[commands(interject, uninterject)]
+#[description = "Fun commands to play around with"]
+struct FunStuff;
 
 struct Handler;
 
@@ -65,6 +71,7 @@ async fn main() {
     let framework = StandardFramework::new()
         .configure(|c| c.prefix("+"))
         .group(&UTILITIES_GROUP)
+        .group(&FUNSTUFF_GROUP)
         .help(&HELP);
 
     let token = env::var("DISCORD_BOT_TOKEN").expect("token");
