@@ -104,9 +104,9 @@ async fn main() {
 #[hook]
 async fn after(_ctx: &Context, _msg: &Message, command_name: &str, command_result: CommandResult) {
     if let Err(why) = command_result {
-        println!("Command '{}' returned error {:?}", command_name, why);
+        println!("Command '{}' returned error {:?}: {}", command_name, why, why.to_string());
 
-        let result = _msg.reply(_ctx,
+        let result = _msg.channel_id.say(_ctx,
             format!(
                 "The command `{}` failed to run and returned an error, this error will be forwarded to the devs.",
                 command_name
