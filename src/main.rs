@@ -43,6 +43,7 @@ use commands::{
     utilities::*,
     fun_stuff::*
 };
+use serenity::model::prelude::{Activity, OnlineStatus};
 
 #[group]
 #[commands(ping, whoami)]
@@ -58,7 +59,19 @@ struct Handler;
 
 #[async_trait]
 impl EventHandler for Handler {
-    async fn ready(&self, _: Context, bot: Ready) {
+    async fn ready(&self, ctx: Context, bot: Ready) {
+        ctx.shard.set_activity(
+            Option::from(
+                Activity::streaming(
+                    "Get real",
+                    "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+                // pretend i am not here, this is an absolutely normal video and nothing is wrong
+                )
+            )
+        );
+
+        ctx.shard.set_status(OnlineStatus::Idle);
+
         println!("{}#{} is ready", bot.user.name, bot.user.discriminator);
     }
 
