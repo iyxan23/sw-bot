@@ -1,20 +1,31 @@
-use serenity::framework::standard::{CommandResult, macros::command};
+use serenity::framework::standard::{CommandResult, macros::command, Args};
 use serenity::model::prelude::*;
 use serenity::prelude::*;
 use serenity::Error;
-use serenity::utils::MessageBuilder;
+use serenity::utils::{MessageBuilder, ArgumentConvert};
 use serenity::utils::Colour;
 
 #[command]
 #[description = "self-explanatory"]
-async fn howgay(ctx: &Context, msg: &Message) -> CommandResult {
+async fn howgay(ctx: &Context, msg: &Message, args: Args) -> CommandResult {
+    let user = if args.is_empty() {
+        msg.author.clone()
+    } else {
+        Member::convert(
+            ctx,
+            msg.guild_id,
+            Option::Some(msg.channel_id),
+            &args.current().unwrap()
+        ).await?.user
+    };
+
     // make the percentage based on the user's id, since.. each user must have their own
     // preferences.. right?
 
     // here, we will get the user id and modulo it with 101
-    let number = msg.author.id.0 % 101u64;
+    let number = user.id.0 % 101u64;
     let mut description = MessageBuilder::new();
-    description.mention(&msg.author);
+    description.mention(&user);
 
     if number == 0 { description.push(" is straight, dam"); }
     else if number < 25 { description.push(format!(" is {}% gay", number)); }
@@ -44,14 +55,25 @@ async fn howgay(ctx: &Context, msg: &Message) -> CommandResult {
 
 #[command]
 #[description = "    g    e    h    "]
-async fn howgeh(ctx: &Context, msg: &Message) -> CommandResult {
+async fn howgeh(ctx: &Context, msg: &Message, args: Args) -> CommandResult {
+    let user = if args.is_empty() {
+        msg.author.clone()
+    } else {
+        Member::convert(
+            ctx,
+            msg.guild_id,
+            Option::Some(msg.channel_id),
+            args.current().unwrap()
+        ).await?.user
+    };
+
     // make the percentage based on the user's id, since.. each user must have their own
     // preferences.. right?
 
     // here will be a bit different, we're going to take the (7th + 8th) and (10th + 11th) number
     // of the user id, multiply it by each other and modulo it with 101
     let number = {
-        let user_id = msg.author.id.0.to_string();
+        let user_id = user.id.0.to_string();
 
         let first_number: i32 = user_id.get(7..8).unwrap().parse().unwrap();
         let second_number: i32 = user_id.get(10..11).unwrap().parse().unwrap();
@@ -60,7 +82,7 @@ async fn howgeh(ctx: &Context, msg: &Message) -> CommandResult {
     };
 
     let mut description = MessageBuilder::new();
-    description.mention(&msg.author);
+    description.mention(&user);
 
     if number == 0 { description.push(" is absolutely not geh. dam, true man"); }
     else if number < 25 { description.push(format!(" is {}% geh", number)); }
