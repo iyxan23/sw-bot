@@ -7,14 +7,14 @@ use std::time::Instant;
 #[description = "Shows the ping of the bot"]
 async fn ping(ctx: &Context, msg: &Message) -> CommandResult {
     let start = Instant::now();
-    let mut msg = msg.reply(ctx, "Pong! :ping_pong:").await?;
+    let mut msg = msg.reply(ctx, ":ping_pong: Pong").await?;
     let duration = start.elapsed();
 
     msg.edit(
         ctx,
         |edit_msg|
             edit_msg.content(
-                format!("Pong! :ping_pong: That took {}ms", (duration.as_millis()))
+                format!(":ping_pong: Pong, that took {}ms", (duration.as_millis()))
             )
     ).await?;
 
