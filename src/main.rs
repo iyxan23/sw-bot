@@ -50,7 +50,7 @@ use commands::{
 struct Utilities;
 
 #[group]
-#[commands(interject, uninterject)]
+#[commands(howgay, howgeh, interject, uninterject)]
 #[description = "Fun commands to play around with"]
 struct FunStuff;
 

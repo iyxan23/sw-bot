@@ -2,6 +2,92 @@ use serenity::framework::standard::{CommandResult, macros::command};
 use serenity::model::prelude::*;
 use serenity::prelude::*;
 use serenity::Error;
+use serenity::utils::MessageBuilder;
+use serenity::utils::Colour;
+
+#[command]
+#[description = "self-explanatory"]
+async fn howgay(ctx: &Context, msg: &Message) -> CommandResult {
+    // make the percentage based on the user's id, since.. each user must have their own
+    // preferences.. right?
+
+    // here, we will get the user id and modulo it with 101
+    let number = msg.author.id.0 % 101u64;
+    let mut description = MessageBuilder::new();
+    description.mention(&msg.author);
+
+    if number == 0 { description.push(" is straight, dam"); }
+    else if number < 25 { description.push(format!(" is {}% gay", number)); }
+    else if number < 50 { description.push(format!(" is {}% gay! mama mia!", number)); }
+    else if number < 75 { description.push(format!(" is {}% gay! 😳", number)); }
+    else if number < 90 { description.push(format!(" IS {}% GAY! <:uhm:815635169616068609>", number)); }
+    else {
+        description.push_bold(
+            format!(
+                " IS {} GAY! <:hels3_1:870207027031453706><:hels3_2:870207286415618059><:hels3_3:870207322188840990>",
+                number
+            )
+        );
+    }
+
+    msg.channel_id.send_message(ctx, |c| {
+        c.reference_message(msg)
+            .add_embed(|e| {
+                e.title("real no scam gay detector machine")
+                    .description(description)
+                    .colour(Colour::new(0xEB0FC6))
+            })
+    }).await?;
+
+    Ok(())
+}
+
+#[command]
+#[description = "    g    e    h    "]
+async fn howgeh(ctx: &Context, msg: &Message) -> CommandResult {
+    // make the percentage based on the user's id, since.. each user must have their own
+    // preferences.. right?
+
+    // here will be a bit different, we're going to take the (7th + 8th) and (10th + 11th) number
+    // of the user id, multiply it by each other and modulo it with 101
+    let number = {
+        let user_id = msg.author.id.0.to_string();
+
+        let first_number: i32 = user_id.get(7..8).unwrap().parse().unwrap();
+        let second_number: i32 = user_id.get(10..11).unwrap().parse().unwrap();
+
+        (first_number * second_number) % 101
+    };
+
+    let mut description = MessageBuilder::new();
+    description.mention(&msg.author);
+
+    if number == 0 { description.push(" is absolutely not geh. dam, true man"); }
+    else if number < 25 { description.push(format!(" is {}% geh", number)); }
+    else if number < 50 { description.push(format!(" is {}% g  e  h", number)); }
+    else if number == 69 { description.push(format!(" i-sss {}% gEH!?.!?. w.- T. F.?.!1?!?1..!?", number)); }
+    else if number < 75 { description.push(format!(" is {}% G E H 😳", number)); }
+    else if number < 90 { description.push(format!(" IS {}% GEEH <:uhm:815635169616068609>", number)); }
+    else {
+        description.push_bold(
+            format!(
+                " IS {} GEEEEHHH! <:uhm:815635169616068609><:uhm:815635169616068609>",
+                number
+            )
+        );
+    }
+
+    msg.channel_id.send_message(ctx, |c| {
+        c.reference_message(msg)
+            .add_embed(|e| {
+                e.title("g  e  h  detector machine")
+                    .description(description)
+                    .colour(Colour::new(0xEB0FC6))
+            })
+    }).await?;
+
+    Ok(())
+}
 
 #[command]
 #[description = "Did someone has just said linux?"]
