@@ -46,7 +46,7 @@ use commands::{
 use serenity::model::prelude::{Activity, OnlineStatus};
 
 #[group]
-#[commands(ping, whoami)]
+#[commands(ping, whoami, purge)]
 #[description = "Utility commands"]
 struct Utilities;
 
