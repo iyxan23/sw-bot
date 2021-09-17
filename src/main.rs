@@ -41,7 +41,8 @@ use std::collections::HashSet;
 
 use commands::{
     utilities::*,
-    fun_stuff::*
+    fun_stuff::*,
+    server_essentials::*
 };
 use serenity::model::prelude::{Activity, OnlineStatus};
 
@@ -54,6 +55,11 @@ struct Utilities;
 #[commands(howgay, howgeh, interject, uninterject)]
 #[description = "Fun commands to play around with"]
 struct FunStuff;
+
+#[group("Server Essentials")]
+#[commands(idea, idea_server)]
+#[description = "Server-specific commands like idea, ideaserver etc"]
+struct ServerEssentials;
 
 struct Handler;
 
@@ -87,6 +93,7 @@ async fn main() {
         .after(after)
         .group(&UTILITIES_GROUP)
         .group(&FUNSTUFF_GROUP)
+        .group(&SERVERESSENTIALS_GROUP)
         .help(&HELP);
 
     let token = env::var("DISCORD_BOT_TOKEN").expect("token");
