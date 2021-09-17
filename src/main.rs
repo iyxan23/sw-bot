@@ -57,7 +57,7 @@ struct Utilities;
 struct FunStuff;
 
 #[group("Server Essentials")]
-#[commands(idea, idea_server)]
+#[commands(idea, idea_server, share_swb)]
 #[description = "Server-specific commands like idea, ideaserver etc"]
 struct ServerEssentials;
 
