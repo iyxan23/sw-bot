@@ -42,7 +42,8 @@ use std::collections::HashSet;
 use commands::{
     utilities::*,
     fun_stuff::*,
-    server_essentials::*
+    server_essentials::*,
+    statistics::*,
 };
 use serenity::model::prelude::{Activity, OnlineStatus};
 
@@ -50,6 +51,11 @@ use serenity::model::prelude::{Activity, OnlineStatus};
 #[commands(idea, idea_server, share_swb)]
 #[description = "Server-specific commands like idea, ideaserver etc"]
 struct ServerEssentials;
+
+#[group]
+#[commands(stats)]
+#[description = "Statistics of the Sketchware Pro discord server"]
+struct Statistics;
 
 #[group]
 #[commands(howgay, howgeh, interject, uninterject)]
@@ -91,9 +97,10 @@ async fn main() {
     let framework = StandardFramework::new()
         .configure(|c| c.prefix("+"))
         .after(after)
-        .group(&UTILITIES_GROUP)
-        .group(&FUNSTUFF_GROUP)
         .group(&SERVERESSENTIALS_GROUP)
+        .group(&STATISTICS_GROUP)
+        .group(&FUNSTUFF_GROUP)
+        .group(&UTILITIES_GROUP)
         .help(&HELP);
 
     let token = env::var("DISCORD_BOT_TOKEN").expect("token");
