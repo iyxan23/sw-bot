@@ -11,13 +11,13 @@ use tokio::time::Duration;
 Delete messages in bulk.
 This can only be used for members that has the \"Manage Messages\" permission.
 
-Delete 10 messages (excluding the purge command message):
-```
-+purge 10
-```
-Related command(s): `spurge`
-"]
+Note: The purge message is not going to count as a message to delete."]
 #[required_permissions(MANAGE_MESSAGES)]
+#[only_in("guilds")]
+#[usage = "(the amount of messages to be deleted)"]
+#[example = "10"]
+#[aliases("p")]
+#[num_args(1)]
 async fn purge(ctx: &Context, msg: &Message, mut args: Args) -> CommandResult {
     let count_res = args.single::<i32>();
 
@@ -55,16 +55,16 @@ async fn purge(ctx: &Context, msg: &Message, mut args: Args) -> CommandResult {
 
 #[command]
 #[description = "\
-Delete messages in bulk _silently_.
+Delete messages in bulk _silently_ (without the \".. message(s) deleted in ..ms\" message being sent).
 This can only be used for members that has the \"Manage Messages\" permission.
 
-Delete 10 messages (excluding the purge command message):
-```
-+spurge 10
-```
-Related command(s): `purge`
-"]
+Note: The purge message is not going to count as a message to delete."]
 #[required_permissions(MANAGE_MESSAGES)]
+#[only_in("guilds")]
+#[usage = "(the amount of messages to be deleted)"]
+#[example = "10"]
+#[aliases("sp")]
+#[num_args(1)]
 async fn spurge(ctx: &Context, msg: &Message, mut args: Args) -> CommandResult {
     let count_res = args.single::<i32>();
 
@@ -110,6 +110,9 @@ async fn delete_messages(ctx: &Context, channel: &ChannelId, count: i32) -> Resu
 
 #[command]
 #[description = "Shows the ping of the bot"]
+#[usage = ""]
+#[example = ""]
+#[num_args(0)]
 async fn ping(ctx: &Context, msg: &Message) -> CommandResult {
     let start = Instant::now();
     let mut msg = msg.reply(ctx, ":ping_pong: Pong").await?;

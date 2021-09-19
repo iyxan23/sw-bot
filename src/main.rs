@@ -46,20 +46,20 @@ use commands::{
 };
 use serenity::model::prelude::{Activity, OnlineStatus};
 
-#[group]
-#[commands(ping, whoami, purge, spurge)]
-#[description = "Utility commands"]
-struct Utilities;
+#[group("Server Essentials")]
+#[commands(idea, idea_server, share_swb)]
+#[description = "Server-specific commands like idea, ideaserver etc"]
+struct ServerEssentials;
 
 #[group]
 #[commands(howgay, howgeh, interject, uninterject)]
 #[description = "Fun commands to play around with"]
 struct FunStuff;
 
-#[group("Server Essentials")]
-#[commands(idea, idea_server, share_swb)]
-#[description = "Server-specific commands like idea, ideaserver etc"]
-struct ServerEssentials;
+#[group]
+#[commands(ping, whoami, purge, spurge)]
+#[description = "Utility commands"]
+struct Utilities;
 
 struct Handler;
 

@@ -6,7 +6,14 @@ use serenity::utils::{MessageBuilder, ArgumentConvert};
 use serenity::utils::Colour;
 
 #[command]
-#[description = "self-explanatory"]
+#[description = "Shows how gay you / the person you mentioned are"]
+#[only_in("guilds")]
+#[usage = "[optional: user id / @mention / UserName#Tag]"]
+#[example = ""]
+#[example = "@lahds13"]
+#[aliases("gay")]
+#[min_args(0)]
+#[max_args(1)]
 async fn howgay(ctx: &Context, msg: &Message, args: Args) -> CommandResult {
     let user = if args.is_empty() {
         msg.author.clone()
@@ -54,7 +61,14 @@ async fn howgay(ctx: &Context, msg: &Message, args: Args) -> CommandResult {
 }
 
 #[command]
-#[description = "    g    e    h    "]
+#[description = "Shows how      g     e     h      a person are"]
+#[only_in("guilds")]
+#[usage = "[optional: user id / @mention / UserName#Tag]"]
+#[example = ""]
+#[example = "@lahds13"]
+#[aliases("geh")]
+#[min_args(0)]
+#[max_args(1)]
 async fn howgeh(ctx: &Context, msg: &Message, args: Args) -> CommandResult {
     let user = if args.is_empty() {
         msg.author.clone()
@@ -113,6 +127,11 @@ async fn howgeh(ctx: &Context, msg: &Message, args: Args) -> CommandResult {
 
 #[command]
 #[description = "Did someone has just said linux?"]
+#[only_in("guilds")]
+#[usage = ""]
+#[example = ""]
+#[aliases("i")]
+#[num_args(0)]
 async fn interject(ctx: &Context, msg: &Message) -> CommandResult {
     // retrieve the webhook
     let webhook: Webhook = get_webhook(ctx, msg.channel_id).await?;
@@ -139,6 +158,11 @@ async fn interject(ctx: &Context, msg: &Message) -> CommandResult {
 
 #[command]
 #[description = "Did someone has just interjected?"]
+#[only_in("guilds")]
+#[usage = ""]
+#[example = ""]
+#[aliases("u")]
+#[num_args(0)]
 async fn uninterject(ctx: &Context, msg: &Message) -> CommandResult {
     // retrieve the webhook
     let webhook: Webhook = get_webhook(ctx, msg.channel_id).await?;

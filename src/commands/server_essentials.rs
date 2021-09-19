@@ -12,7 +12,14 @@ use std::fs::remove_file;
 const SHARE_SWB_CHANNEL: u64 = 853779563876319242;
 
 #[command("shareswb")]
-#[description = "Share an swb to other people! The swb will be shared on <#853779563876319242>"]
+#[description = "\
+Share an swb to other people in the server! The swb will be shared on <#853779563876319242>\
+
+Make sure to attach an .swb file along with your +shareswb command"]
+#[usage = "(description)"]
+#[example = "My awesome swb project"]
+#[only_in("guilds")]
+#[aliases("share", "sswb")]
 async fn share_swb(ctx: &Context, msg: &Message, args: Args) -> CommandResult {
     if args.is_empty() {
         msg.reply(
@@ -103,6 +110,8 @@ const IDEA_REACTIONS: [&str; 0] = []; // todo: add the upvote and downvote emoji
 #[description = "Submit an idea to Sketchware Pro; The idea will be sent on <#790687893701918730>."]
 #[usage = "(your idea)"]
 #[example = "Implement Kotlin to Sketchware Pro"]
+#[only_in("guilds")]
+#[aliases("i")]
 async fn idea(ctx: &Context, msg: &Message, args: Args) -> CommandResult {
     if args.is_empty() {
         msg.reply(
@@ -133,7 +142,9 @@ async fn idea(ctx: &Context, msg: &Message, args: Args) -> CommandResult {
 #[command("ideaserver")]
 #[description = "Submit an idea to the discord server; The idea will be sent on <#826514832005136465>."]
 #[usage = "(your idea)"]
-#[example = "Add more cat pictures"]
+#[example = "Create the #android-studio channel"]
+#[only_in("guilds")]
+#[aliases("is")]
 async fn idea_server(ctx: &Context, msg: &Message, args: Args) -> CommandResult {
     if args.is_empty() {
         msg.reply(
