@@ -1,10 +1,12 @@
 use serenity::model::id::UserId;
 use std::collections::HashMap;
+use async_trait::async_trait;
 
 // I made this so I can switch databases easily and the database-related code & bot-related code are
 // separated from each other.
+#[async_trait]
 pub trait IDatabase {
-    async fn connect(&self);
+    async fn init(&self);
 
     /// ===== Used for stats =====
 
@@ -18,7 +20,7 @@ pub trait IDatabase {
     async fn get_msg_count(&self, user: UserId) -> u32;
 }
 
-struct MemberMsgCount {
-    user_id: UserId,
-    count: u32
+pub struct MemberMsgCount {
+    pub user_id: UserId,
+    pub count: u32
 }
