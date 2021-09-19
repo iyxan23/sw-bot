@@ -1,4 +1,5 @@
 mod commands;
+mod database;
 
 use serenity::{
     async_trait,
