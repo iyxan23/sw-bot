@@ -36,7 +36,7 @@ impl IDatabase for PostgreSQLDatabase {
         // create table(s) if they doesn't exist
         self.client
             .execute("CREATE TABLE IF NOT EXISTS msg_count ( \
-                    user_id BIGINT NOT NULL, \
+                    user_id BIGINT PRIMARY KEY, \
                     count INT NOT NULL DEFAULT '0', \
                 )", &[])
             .await
@@ -70,10 +70,29 @@ impl IDatabase for PostgreSQLDatabase {
     }
 
     async fn commit_msg_count(&self, batch: HashMap<UserId, u32>) {
-        todo!()
+        for user_id in batch.keys() {
+            let count = (*batch.get(user_id).unwrap()) as i32;
+
+            self.client
+                .execute(
+                    "UPDATE msg_count (count) VALUES ($1) WHERE user_id = $2",
+                    &[&count, &(user_id.0 as i64)]
+                )
+                .await
+                .expect(format!("Failed to update msg_count for {}", user_id.0).as_str());
+        }
     }
 
     async fn get_msg_count(&self, user: UserId) -> u32 {
-        todo!()
+        let rows = self.client
+            .query(
+                "SELECT count FROM msg_count WHERE user_id = $1",
+                &[&(user.0 as i64)]
+            )
+            .await
+            .unwrap();
+
+        let count_signed: i32 = rows[0].get(0);
+        count_signed as u32
     }
 }
