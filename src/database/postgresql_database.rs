@@ -6,15 +6,16 @@ use tokio_postgres::tls::NoTlsStream;
 use std::env;
 use async_trait::async_trait;
 
-struct PostgreSQLDatabase {
+pub struct PostgreSQLDatabase {
     client: tokio_postgres::Client,
     connection: tokio_postgres::Connection<Socket, NoTlsStream>,
 }
 
 unsafe impl Sync for PostgreSQLDatabase {}
+unsafe impl Send for PostgreSQLDatabase {}
 
 impl PostgreSQLDatabase {
-    async fn new() -> Self {
+    pub async fn new() -> Self {
         let postgres_credentials =
             env::var("POSTGRES_CREDENTIALS")
                 .expect("POSTGRES_CREDENTIALS environment variable is not present");

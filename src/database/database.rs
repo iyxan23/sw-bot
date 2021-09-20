@@ -1,6 +1,7 @@
 use serenity::model::id::UserId;
 use std::collections::HashMap;
 use async_trait::async_trait;
+use serenity::prelude::TypeMapKey;
 
 // I made this so I can switch databases easily and the database-related code & bot-related code are
 // separated from each other.
@@ -18,6 +19,12 @@ pub trait IDatabase {
 
     /// Used to get a member's msg count
     async fn get_msg_count(&self, user: UserId) -> u32;
+}
+
+pub struct SWBotDatabase;
+
+impl TypeMapKey for SWBotDatabase {
+    type Value = Box<dyn IDatabase + Sync + Send>;
 }
 
 pub struct MemberMsgCount {
