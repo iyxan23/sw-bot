@@ -59,7 +59,7 @@ struct ServerEssentials;
 struct Statistics;
 
 #[group]
-#[commands(howgay, howgeh, interject, uninterject)]
+#[commands(howgay, howgeh, interject, uninterject, carbon)]
 #[description = "Fun commands to play around with"]
 struct FunStuff;
 
