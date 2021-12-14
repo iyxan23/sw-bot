@@ -124,6 +124,35 @@ async fn howgeh(ctx: &Context, msg: &Message, args: Args) -> CommandResult {
 
     Ok(())
 }
+#[command]
+#[description = "Beautify a snippet"]
+#[usage = "(your snippet)"]
+#[example = "println('Hello World')"]
+
+async fn carbon(ctx: &Context, msg: &Message, args: Args) -> CommandResult {
+    if args.is_empty() {
+        msg.reply(
+            ctx,
+            "You need to supply a code as the parameter of the command\n\nExample:\n```+carbon println('apple')```"
+        ).await?;
+
+        return Ok(());
+    }
+    let code = args.rest().to_string().replace(" ", "+").replace("\n","+%0A+");
+    let url : String = "https://carbonnowsh.herokuapp.com/?code=".to_owned() + &code + "&theme=darcula&backgroundColor=rgba(255,255,255)";
+
+        msg.channel_id.send_message(&ctx, |m | {
+        m.embed(|e | {
+            e.image(url);
+            return e;
+        });
+
+        return m;
+    }
+    ).await?;
+
+    Ok(())
+}
 
 #[command]
 #[description = "Did someone has just said linux?"]
